@@ -2,13 +2,14 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 )
 
-func day2aPossible(line string) bool {
+func day2aPossible(line string) int {
 	const red, green, blue = 12, 13, 14
 
-	_, rest, _ := strings.Cut(line, ": ")
+	game, rest, _ := strings.Cut(line, ": ")
 	for _, set := range strings.Split(rest, "; ") {
 		for _, item := range strings.Split(set, ", ") {
 			var count int
@@ -16,26 +17,19 @@ func day2aPossible(line string) bool {
 			fmt.Sscanf(item, "%d %s", &count, &color)
 
 			if color == "red" && count > red || color == "green" && count > green || color == "blue" && count > blue {
-				return false
+				return 0
 			}
 		}
 	}
 
-	return true
-}
+	_, num, _ := strings.Cut(game, " ")
+	inum, _ := strconv.Atoi(num)
 
-func day2aWork(lines []string) int {
-	var total int
-	for i, line := range lines {
-		if day2aPossible(line) {
-			total += i + 1
-		}
-	}
-	return total
+	return inum
 }
 
 func day2a() int {
-	return day2aWork(mustReadInput(2))
+	return sumtotal(mustReadInput(2), day2aPossible)
 }
 
 func day2bPower(line string) int {
@@ -62,14 +56,6 @@ func day2bPower(line string) int {
 	return minRed * minGreen * minBlue
 }
 
-func day2bWork(lines []string) int {
-	var total int
-	for _, line := range lines {
-		total += day2bPower(line)
-	}
-	return total
-}
-
 func day2b() int {
-	return day2bWork(mustReadInput(2))
+	return sumtotal(mustReadInput(2), day2bPower)
 }

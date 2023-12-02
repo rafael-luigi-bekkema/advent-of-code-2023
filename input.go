@@ -6,6 +6,7 @@ import (
 	"os"
 )
 
+// mustReadInput returns puzzle input for the given day
 func mustReadInput(day uint) []string {
 	lines, err := readInput(day)
 	if err != nil {

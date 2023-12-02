@@ -1,16 +1,7 @@
 package main
 
 func day1a() int {
-	lines := mustReadInput(1)
-	return day1aWork(lines)
-}
-
-func day1aWork(lines []string) int {
-	var total int
-	for _, line := range lines {
-		total += day1aExtractDigits(line)
-	}
-	return total
+	return sumtotal(mustReadInput(1), day1aExtractDigits)
 }
 
 func day1aExtractDigits(input string) int {
@@ -32,16 +23,7 @@ func day1aExtractDigits(input string) int {
 }
 
 func day1b() int {
-	lines := mustReadInput(1)
-	return day1bWork(lines)
-}
-
-func day1bWork(lines []string) int {
-	var total int
-	for _, line := range lines {
-		total += day1bExtractDigits(line)
-	}
-	return total
+	return sumtotal(mustReadInput(1), day1bExtractDigits)
 }
 
 func day1bExtractDigits(input string) int {

@@ -12,10 +12,10 @@ func TestDay1a(t *testing.T) {
 
 func TestDay1aWork(t *testing.T) {
 	expect := 142
-	result := day1aWork([]string{"1abc2",
+	result := sumtotal([]string{"1abc2",
 		"pqr3stu8vwx",
 		"a1b2c3d4e5f",
-		"treb7uchet"})
+		"treb7uchet"}, day1aExtractDigits)
 
 	AssertEqual(t, expect, result)
 }
@@ -47,13 +47,13 @@ func TestDay1b(t *testing.T) {
 
 func TestDay1bWork(t *testing.T) {
 	expect := 281
-	result := day1bWork([]string{"two1nine",
+	result := sumtotal([]string{"two1nine",
 		"eightwothree",
 		"abcone2threexyz",
 		"xtwone3four",
 		"4nineeightseven2",
 		"zoneight234",
-		"7pqrstsixteen"})
+		"7pqrstsixteen"}, day1bExtractDigits)
 
 	AssertEqual(t, expect, result)
 }

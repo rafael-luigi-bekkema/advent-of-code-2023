@@ -10,7 +10,7 @@ func TestDay1a(t *testing.T) {
 	}
 }
 
-func TestDay1aExample(t *testing.T) {
+func TestDay1aWork(t *testing.T) {
 	expect := 142
 	result := day1aWork([]string{"1abc2",
 		"pqr3stu8vwx",
@@ -20,7 +20,7 @@ func TestDay1aExample(t *testing.T) {
 	AssertEqual(t, expect, result)
 }
 
-func TestDay1aextractDigits(t *testing.T) {
+func TestDay1aExtractDigits(t *testing.T) {
 	tt := []struct {
 		Input  string
 		Expect int
@@ -45,7 +45,7 @@ func TestDay1b(t *testing.T) {
 	AssertEqual(t, expect, result)
 }
 
-func TestDay1bExample(t *testing.T) {
+func TestDay1bWork(t *testing.T) {
 	expect := 281
 	result := day1bWork([]string{"two1nine",
 		"eightwothree",
@@ -58,7 +58,7 @@ func TestDay1bExample(t *testing.T) {
 	AssertEqual(t, expect, result)
 }
 
-func TestDay1bextractDigits(t *testing.T) {
+func TestDay1bExtractDigits(t *testing.T) {
 	tt := []struct {
 		Input  string
 		Expect int

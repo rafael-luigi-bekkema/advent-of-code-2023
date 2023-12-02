@@ -1,0 +1,7 @@
+on: [push]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    container: 1.21.4-alpine
+    steps:
+      - run: go test .

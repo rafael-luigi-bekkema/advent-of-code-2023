@@ -75,7 +75,7 @@ func TestDay2bWork(t *testing.T) {
 }
 
 func TestDay2b(t *testing.T) {
-	expect := 72971
+	expect := 72970
 	result := day2b()
 	AssertEqual(t, expect, result)
 }

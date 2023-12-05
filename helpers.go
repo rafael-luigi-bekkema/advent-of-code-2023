@@ -1,5 +1,9 @@
 package main
 
+import (
+	"cmp"
+)
+
 // sumtotal runs f on each line and returns the sum total
 func sumtotal(lines []string, f func(string) int) int {
 	var total int
@@ -20,4 +24,22 @@ func intersect[T comparable](slice1, slice2 []T) []T {
 		}
 	}
 	return result
+}
+
+func min[T cmp.Ordered](values ...T) T {
+	if len(values) == 0 {
+		panic("min on zero length slice")
+	}
+
+	var min T
+	first := true
+	for _, value := range values {
+		if !first && value >= min {
+			continue
+		}
+		min = value
+		first = false
+	}
+
+	return min
 }

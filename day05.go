@@ -40,7 +40,7 @@ outer:
 				break
 			}
 
-			nums := toNums(lines[i])
+			nums := lineToNums(lines[i])
 			delta := nums[2] - 1
 			routes[from] = to
 			themap[to] = append(themap[to], day5route{
@@ -53,7 +53,7 @@ outer:
 	}
 
 	_, sseeds, _ := strings.Cut(lines[0], ": ")
-	seeds = toNums(sseeds)
+	seeds = lineToNums(sseeds)
 
 	return seeds, themap, routes
 }

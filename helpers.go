@@ -2,6 +2,8 @@ package main
 
 import (
 	"cmp"
+	"strconv"
+	"strings"
 )
 
 // sumtotal runs f on each line and returns the sum total
@@ -42,4 +44,30 @@ func min[T cmp.Ordered](values ...T) T {
 	}
 
 	return min
+}
+
+func lineToNums(line string) []int {
+	fields := strings.Fields(line)
+	nums := make([]int, len(fields))
+	for i, field := range fields {
+		num, err := strconv.Atoi(field)
+		if err != nil {
+			panic(err)
+		}
+		nums[i] = num
+	}
+	return nums
+}
+
+func strsToNums(items []string) []int {
+	nums := make([]int, len(items))
+	for i, item := range items {
+		num, err := strconv.Atoi(item)
+		if err != nil {
+			panic(err)
+		}
+		nums[i] = num
+	}
+
+	return nums
 }

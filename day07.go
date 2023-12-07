@@ -144,14 +144,11 @@ func day7handMaxValue(hand [5]card) int {
 		return counts[j].count < counts[i].count
 	})
 
-	// ohand := hand
 	for i := range hand {
 		if hand[i] == joker {
 			hand[i] = counts[0].value
 		}
 	}
-
-	// fmt.Println(string(hand[:]), string(ohand[:]))
 
 	return day7handValue(hand)
 }

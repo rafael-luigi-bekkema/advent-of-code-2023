@@ -2,6 +2,7 @@ package main
 
 import (
 	"cmp"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -70,4 +71,24 @@ func strsToNums(items []string) []int {
 	}
 
 	return nums
+}
+
+type countResult[T comparable] struct {
+	value T
+	count int
+}
+
+func Count[T comparable](slice []T) []countResult[T] {
+	result := map[T]int{}
+	for _, item := range slice {
+		result[item]++
+	}
+	results := make([]countResult[T], 0, len(result))
+	for value, count := range result {
+		results = append(results, countResult[T]{value, count})
+	}
+	sort.Slice(results, func(i, j int) bool {
+		return results[j].count < results[i].count
+	})
+	return results
 }

@@ -2,7 +2,6 @@ package main
 
 import (
 	"cmp"
-	"sort"
 	"strconv"
 	"strings"
 )
@@ -87,8 +86,5 @@ func Count[T comparable](slice []T) []countResult[T] {
 	for value, count := range result {
 		results = append(results, countResult[T]{value, count})
 	}
-	sort.Slice(results, func(i, j int) bool {
-		return results[j].count < results[i].count
-	})
 	return results
 }

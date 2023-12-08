@@ -88,3 +88,25 @@ func Count[T comparable](slice []T) []countResult[T] {
 	}
 	return results
 }
+
+func Same[T comparable](slice1, slice2 []T) bool {
+	if len(slice1) != len(slice2) {
+		return false
+	}
+
+	for i, item := range slice1 {
+		if item != slice2[i] {
+			return false
+		}
+	}
+
+	return true
+}
+
+func Values [T comparable, U any](m map[T]U) []U {
+	values := make([]U, 0, len(m))
+	for _, value := range m {
+		values = append(values, value)
+	}
+	return values
+}

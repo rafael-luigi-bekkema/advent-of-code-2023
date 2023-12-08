@@ -41,3 +41,28 @@ func TestDay8aExample(t *testing.T) {
 		})
 	}
 }
+
+// func TestDay8b(t *testing.T) {
+// 	expect := 14265111103729 // too low = 2179700000
+// 	result := day8b()
+
+// 	AssertEqual(t, expect, result)
+// }
+
+func TestDay8bExample(t *testing.T) {
+	input := []string{
+		"LR",
+		"",
+		"11A = (11B, XXX)",
+		"11B = (XXX, 11Z)",
+		"11Z = (11B, XXX)",
+		"22A = (22B, XXX)",
+		"22B = (22C, 22C)",
+		"22C = (22Z, 22Z)",
+		"22Z = (22B, 22B)",
+		"XXX = (XXX, XXX)",
+	}
+	expect := 6
+	result := day8bSteps(input)
+	AssertEqual(t, expect, result)
+}

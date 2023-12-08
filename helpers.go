@@ -28,7 +28,7 @@ func intersect[T comparable](slice1, slice2 []T) []T {
 	return result
 }
 
-func min[T cmp.Ordered](values ...T) T {
+func min2[T cmp.Ordered](values ...T) T {
 	if len(values) == 0 {
 		panic("min on zero length slice")
 	}
@@ -103,7 +103,7 @@ func Same[T comparable](slice1, slice2 []T) bool {
 	return true
 }
 
-func Values [T comparable, U any](m map[T]U) []U {
+func Values[T comparable, U any](m map[T]U) []U {
 	values := make([]U, 0, len(m))
 	for _, value := range m {
 		values = append(values, value)

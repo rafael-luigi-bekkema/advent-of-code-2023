@@ -107,7 +107,7 @@ func day5aMinLocation(lines []string) int {
 		follow(seed, soil)
 	}
 
-	return min(result...)
+	return min2(result...)
 }
 
 func day5bMinLocation(lines []string) int {

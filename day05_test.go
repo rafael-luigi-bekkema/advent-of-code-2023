@@ -44,7 +44,7 @@ func TestDay5Min(t *testing.T) {
 
 	for _, tc := range tt {
 		t.Run("", func(t *testing.T) {
-			result := min(tc.input...)
+			result := min2(tc.input...)
 			AssertEqual(t, tc.expect, result)
 		})
 	}

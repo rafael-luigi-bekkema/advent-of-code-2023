@@ -1,7 +1,9 @@
 package main
 
 import (
+	"cmp"
 	"fmt"
+	"slices"
 	"strings"
 )
 
@@ -61,6 +63,12 @@ outer:
 		}
 
 		from++
+	}
+
+	for i := range themap {
+		slices.SortFunc(themap[i], func(a, b day5route) int {
+			return cmp.Compare(a.src[0], b.src[0])
+		})
 	}
 
 	_, sseeds, _ := strings.Cut(lines[0], ": ")

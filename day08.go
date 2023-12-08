@@ -1,7 +1,9 @@
 package main
 
 import (
+	"cmp"
 	"regexp"
+	"slices"
 )
 
 func day8a() int {
@@ -126,25 +128,24 @@ outer:
 		}
 	}
 
-	var found bool
+	// Turns out that loopStart and loopSize are always the same.
+
+	// Largest first
+	slices.SortFunc(ghosts, func(a, b ghost) int {
+		return cmp.Compare(b.loopSize, a.loopSize)
+	})
+
+outer_2_electric_boogaloo:
 	for j := 0; true; j++ {
 		step = ghosts[0].loopStart + j*ghosts[0].loopSize
 
-		allmatches := true
 		for _, ghost := range ghosts[1:] {
 			if (step-ghost.loopStart)%ghost.loopSize != 0 {
-				allmatches = false
-				break
+				continue outer_2_electric_boogaloo
 			}
 		}
-		if allmatches {
-			found = true
-			break
-		}
-	}
 
-	if !found {
-		panic("solution not found")
+		break
 	}
 
 	return step

@@ -42,12 +42,12 @@ func TestDay8aExample(t *testing.T) {
 	}
 }
 
-// func TestDay8b(t *testing.T) {
-// 	expect := 14265111103729 // too low = 2179700000
-// 	result := day8b()
+func TestDay8b(t *testing.T) {
+	expect := 14265111103729 // too low = 2179700000
+	result := day8b()
 
-// 	AssertEqual(t, expect, result)
-// }
+	AssertEqual(t, expect, result)
+}
 
 func TestDay8bExample(t *testing.T) {
 	input := []string{

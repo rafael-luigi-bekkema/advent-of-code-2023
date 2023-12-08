@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"regexp"
 )
 
@@ -33,7 +32,7 @@ func day8aSteps(lines []string) int {
 	directions := lines[0]
 	ins := parseDay8(lines)
 
-	var current = "AAA"
+	current := "AAA"
 	var steps int
 
 outer:
@@ -66,84 +65,87 @@ outer:
 
 func day8bSteps(lines []string) int {
 	directions := lines[0]
-	ins := parseDay8(lines)
+	insructions := parseDay8(lines)
 
-	var positions []string
-	for from := range ins {
+	type ghost struct {
+		location  string
+		loopStart int
+		loopSize  int
+	}
+
+	var ghosts []ghost
+	for from := range insructions {
 		if from[2] == 'A' {
-			positions = append(positions, from)
+			ghosts = append(ghosts, ghost{
+				location:  from,
+				loopStart: -1,
+				loopSize:  -1,
+			})
 		}
 	}
 
-	starts := make([]string, len(positions))
-	copy(starts, positions)
-
-	var steps int
-	firstzs := map[string]int{}
-	secondzs := map[string]int{}
+	var step int
+	var loopsFound int
 
 outer:
 	for {
 		for _, dir := range directions {
-			steps += 1
+			step += 1
 
-			for i, current := range positions {
-				in, ok := ins[current]
+			for i, ghost := range ghosts {
+				in, ok := insructions[ghost.location]
 				if !ok {
-					panic("unknown location: " + current)
+					panic("unknown location: " + ghost.location)
 				}
 
 				switch dir {
 				case 'L':
-					positions[i] = in.left
+					ghosts[i].location = in.left
 				case 'R':
-					positions[i] = in.right
+					ghosts[i].location = in.right
 				default:
 					panic("unknown direction: " + string(dir))
 				}
 
-				if positions[i][2] != 'Z' {
+				if ghosts[i].location[2] != 'Z' {
 					continue
 				}
 
-				firstz, ok := firstzs[starts[i]]
-				_, ok2 := secondzs[starts[i]]
-				if ok && !ok2 {
-					secondzs[starts[i]] = steps - firstz
+				if ghosts[i].loopStart != -1 && ghosts[i].loopSize == -1 {
+					ghosts[i].loopSize = step - ghosts[i].loopStart
+					loopsFound++
 				}
-				if !ok {
-					firstzs[starts[i]] = steps
+				if ghosts[i].loopStart == -1 {
+					ghosts[i].loopStart = step
 				}
 			}
 
-			if len(secondzs) == len(starts) {
+			if loopsFound == len(ghosts) {
 				break outer
 			}
 		}
 	}
 
-	var sstep int
 	var found bool
-	for j := 0; j < 1000_000_000; j++ {
-		sstep = firstzs[starts[0]] + j*secondzs[starts[0]]
+	for j := 0; true; j++ {
+		step = ghosts[0].loopStart + j*ghosts[0].loopSize
 
 		allmatches := true
-		for _, start := range starts[1:] {
-			if (sstep-firstzs[start])%secondzs[start] != 0 {
+		for _, ghost := range ghosts[1:] {
+			if (step-ghost.loopStart)%ghost.loopSize != 0 {
 				allmatches = false
 				break
 			}
 		}
 		if allmatches {
-			fmt.Println(sstep, j)
 			found = true
 			break
 		}
 	}
 
 	if !found {
-		panic("not found")
+		panic("solution not found")
 	}
 
-	return sstep
+	return step
 }

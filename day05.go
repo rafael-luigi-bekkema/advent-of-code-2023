@@ -17,18 +17,28 @@ type day5route struct {
 	dst, src [2]int
 }
 
-type theMap map[string][]day5route
-type rouTes map[string]string
+type theMap [][]day5route
 
-func day5ParseLines(lines []string) (seeds []int, themap theMap, routes rouTes) {
-	themap = theMap{}
-	routes = rouTes{}
+type subject int
+
+const (
+	seed subject = iota
+	soil
+	fertilizer
+	water
+	light
+	temperature
+	humidity
+	location
+)
+
+func day5ParseLines(lines []string) (seeds []int, themap theMap) {
+	themap = make(theMap, location+1)
 
 	i := 2
+	from := seed
 outer:
 	for {
-		sfromTo, _, _ := strings.Cut(lines[i], " ")
-		from, to, _ := strings.Cut(sfromTo, "-to-")
 		i++
 
 		for {
@@ -42,29 +52,27 @@ outer:
 
 			nums := lineToNums(lines[i])
 			delta := nums[2] - 1
-			routes[from] = to
-			themap[to] = append(themap[to], day5route{
+			themap[from+1] = append(themap[from+1], day5route{
 				dst: [2]int{nums[0], nums[0] + delta},
 				src: [2]int{nums[1], nums[1] + delta},
 			})
 
 			i++
 		}
+
+		from++
 	}
 
 	_, sseeds, _ := strings.Cut(lines[0], ": ")
 	seeds = lineToNums(sseeds)
 
-	return seeds, themap, routes
+	return seeds, themap
 }
 
 func findDest(routes []day5route, item int) (int, int) {
-	var dst int
 	for _, route := range routes {
 		if item >= route.src[0] && item <= route.src[1] {
-			diff := item - route.src[0]
-			dst = route.dst[0] + diff
-			return dst, route.dst[1]
+			return route.dst[0] + item - route.src[0], route.dst[1]
 		}
 	}
 
@@ -72,48 +80,46 @@ func findDest(routes []day5route, item int) (int, int) {
 }
 
 func day5aMinLocation(lines []string) int {
-	seeds, themap, routes := day5ParseLines(lines)
+	seeds, themap := day5ParseLines(lines)
 
 	var result []int
 
-	var follow func(item int, typ string)
-	follow = func(item int, typ string) {
+	var follow func(item int, typ subject)
+	follow = func(item int, typ subject) {
 		dst, _ := findDest(themap[typ], item)
 
-		dstTyp, ok := routes[typ]
-		if !ok {
+		if (typ + 1) > location {
 			result = append(result, dst)
 			return
 		}
-		follow(dst, dstTyp)
+		follow(dst, typ+1)
 	}
 
 	for _, seed := range seeds {
-		follow(seed, "soil")
+		follow(seed, soil)
 	}
 
 	return min(result...)
 }
 
 func day5bMinLocation(lines []string) int {
-	seeds, themap, routes := day5ParseLines(lines)
+	seeds, themap := day5ParseLines(lines)
 
-	var follow func(start, stop int, typ string, result *int)
-	follow = func(start, stop int, typ string, result *int) {
+	var follow func(start, stop int, typ subject, result *int)
+	follow = func(start, stop int, typ subject, result *int) {
 		croutes := themap[typ]
-		dstTyp, ok := routes[typ]
 
 		var dst, to int
 		for i := start; i <= stop; i++ {
 			dst, to = findDest(croutes, i)
 			to = min(dst+stop-i, to)
 
-			if !ok {
+			if (typ + 1) > location {
 				if *result == -1 || dst < *result {
 					*result = dst
 				}
 			} else {
-				follow(dst, to, dstTyp, result)
+				follow(dst, to, typ+1, result)
 			}
 
 			i += to - dst
@@ -128,7 +134,7 @@ func day5bMinLocation(lines []string) int {
 		count++
 		go func() {
 			result := -1
-			follow(seeds[i], seeds[i]+seeds[i+1]-1, "soil", &result)
+			follow(seeds[i], seeds[i]+seeds[i+1]-1, soil, &result)
 
 			results <- result
 		}()

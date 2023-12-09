@@ -17,12 +17,12 @@ func TestDay5aMinLocation(t *testing.T) {
 	AssertEqual(t, expect, result)
 }
 
-// func TestDay5b(t *testing.T) {
-// 	expect := 26714516
-// 	result := day5b()
+func TestDay5b(t *testing.T) {
+	expect := 26714516
+	result := day5b()
 
-// 	AssertEqual(t, expect, result)
-// }
+	AssertEqual(t, expect, result)
+}
 
 func TestDay5bMinLocation(t *testing.T) {
 	input := mustReadExampleInput(5)

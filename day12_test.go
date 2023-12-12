@@ -42,3 +42,44 @@ func TestDay12aTotal(t *testing.T) {
 	result := sumtotal(input, day12aRow)
 	AssertEqual(t, expect, result)
 }
+
+// func TestDay12b(t *testing.T) {
+// 	expect := 0
+// 	result := day12b()
+// 	AssertEqual(t, expect, result)
+// }
+
+func TestDay12bRow(t *testing.T) {
+	tt := []struct {
+		input  string
+		expect int
+	}{
+		{"???.### 1,1,3", 1},
+		{".??..??...?##. 1,1,3", 16384},
+		{"?#?#?#?#?#?#?#? 1,3,1,6", 1},
+		{"????.#...#... 4,1,1", 16},
+		{"????.######..#####. 1,6,5", 2500},
+		{"?###???????? 3,2,1", 506250},
+	}
+
+	for _, tc := range tt {
+		t.Run("", func(t *testing.T) {
+			result := day12bRow(tc.input)
+			AssertEqual(t, tc.expect, result)
+		})
+	}
+}
+
+func TestDay12bTotal(t *testing.T) {
+	input := []string{
+		"???.### 1,1,3",
+		".??..??...?##. 1,1,3",
+		"?#?#?#?#?#?#?#? 1,3,1,6",
+		"????.#...#... 4,1,1",
+		"????.######..#####. 1,6,5",
+		"?###???????? 3,2,1",
+	}
+	expect := 525152
+	result := day12bTotal(input)
+	AssertEqual(t, expect, result)
+}

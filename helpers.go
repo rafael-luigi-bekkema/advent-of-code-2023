@@ -117,3 +117,11 @@ func abs[T ~int](value T) T {
 	}
 	return value
 }
+
+func sum(values []int) int {
+	var result int
+	for _, value := range values {
+		result += value
+	}
+	return result
+}

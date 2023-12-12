@@ -110,3 +110,10 @@ func Values[T comparable, U any](m map[T]U) []U {
 	}
 	return values
 }
+
+func abs[T ~int](value T) T {
+	if value < 0 {
+		return value * -1
+	}
+	return value
+}

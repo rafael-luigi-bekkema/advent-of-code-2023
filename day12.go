@@ -22,19 +22,30 @@ func day12b() int {
 type day12job struct {
 	osprings   string
 	nums       []int
+	numSums    []int
 	lastDmgIdx int
 	len        int
 	lennums    int
 }
 
 func day12newjob(springs string, nums []int) *day12job {
-	return &day12job{springs, nums, strings.LastIndex(springs, "#"), len(springs), len(nums)}
+	numSums := make([]int, len(nums))
+	var sum int
+	for i := len(numSums) - 1; i >= 0; i-- {
+		sum += nums[i]
+		if i < len(numSums)-1 {
+			sum++
+		}
+		numSums[i] = sum
+	}
+
+	return &day12job{springs, nums, numSums, strings.LastIndex(springs, "#"), len(springs), len(nums)}
 }
 
 func (job *day12job) day12aRecur(numidx, pos int) int {
 	var total int
 
-	if (job.len - pos) < sum(job.nums[numidx:])+len(job.nums[numidx:])-1 {
+	if (job.len - pos) < job.numSums[numidx] {
 		return 0
 	}
 

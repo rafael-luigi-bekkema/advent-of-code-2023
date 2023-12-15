@@ -80,6 +80,6 @@ func TestDay12bTotal(t *testing.T) {
 		"?###???????? 3,2,1",
 	}
 	expect := 525152
-	result := day12bTotal(input)
+	result := day12bTotal(input, false)
 	AssertEqual(t, expect, result)
 }

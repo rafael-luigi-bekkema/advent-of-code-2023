@@ -3,5 +3,10 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println("Day 12b:", day12b())
+	lines := mustReadInput(12)
+
+	for i, line := range lines {
+		fmt.Println("line", i, line)
+		fmt.Println(day12bRow(line))
+	}
 }
